@@ -2,19 +2,16 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import html
 
-app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.LUMEN])
+app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.LUMEN], meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}])
 server = app.server
 app.config.suppress_callback_exceptions = True
 
 SIDEBAR_STYLE = {
     "position": "fixed",
-    "top": 0,
-    "left": 0,
-    "bottom": 0,
-    "width": "16rem",
-    "padding": "2rem 1rem",
+    "width": "16rm",
     "background-color": "#292929",
     "text-color": "#FFFFFF",
+    "height": "100vh"
 }
 
 NAVLINK_STYLE = {
@@ -40,12 +37,11 @@ sidebar = html.Div(
     style=SIDEBAR_STYLE,
 )
 
-# Layout do aplicativo
 app.layout = dbc.Container(
     fluid=True,
     children=[
         dbc.Row([
-            dbc.Col([sidebar], width=2),  # Sidebar column
+            dbc.Col([sidebar], width=2, style={"padding": "0px"}),  # Sidebar column
             dbc.Col([dash.page_container], width=10),  # Content column
         ]),
     ]
