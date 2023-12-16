@@ -45,7 +45,7 @@ app.layout = dbc.Container(
     fluid=True,
     children=[
         dbc.Row([
-            dbc.Col([sidebar], width=2),  # Sidebar column
+            dbc.Col([sidebar], width=2, style={"padding": "0px"}),  # Sidebar column
             dbc.Col([dash.page_container], width=10),  # Content column
         ]),
     ]
