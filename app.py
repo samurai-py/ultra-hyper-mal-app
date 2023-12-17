@@ -8,10 +8,13 @@ app.config.suppress_callback_exceptions = True
 
 SIDEBAR_STYLE = {
     "position": "fixed",
-    "width": "16rm",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "width": "16rem",
+    "padding": "2rem 1rem",
     "background-color": "#292929",
     "text-color": "#FFFFFF",
-    "height": "100vh"
 }
 
 NAVLINK_STYLE = {
