@@ -17,6 +17,8 @@ episodes = df_animes_fm["episodes"].values[0]
 genre = df_animes_fm["anime_genre"].values[0]
 genre_list = eval(genre)
 
+
+
 # Gráfico Gênero
 
 df_distribution.fillna('Others', inplace=True)
@@ -57,6 +59,45 @@ card_image_style = {
     "width": "200%",
     "height": "100%",
 }
+
+
+
+# Gráfico de idade
+
+df_age = df_distribution_filtered.copy()# Converter valores da coluna 'age' para numéricos
+df_age['age'] = pd.to_numeric(df_age['age'], errors='coerce')
+
+# Dropar valores nulos na coluna 'age'
+df_age = df_age.dropna(subset=['age'])
+
+# Arredondar os valores da coluna 'age' para inteiros
+df_age['age'] = df_age['age'].astype(int)
+
+# Definir a escala de cores para o eixo x (substitua 'Viridis' por sua escala desejada)
+scale = px.colors.sequential.Viridis
+
+# Criar o histograma de idades
+fig_age = px.histogram(
+    df_age,
+    x='age',
+    nbins=20,  # Número de bins (intervalos) no histograma
+    title='Distribuição de Idades dos Usuários para anime_id 1',
+    labels={'age': 'Idade', 'count': 'Número de Usuários'},
+    color='age',  # Usar 'age' como variável de cor para o eixo x
+    color_discrete_sequence=scale,  # Definir colorscale para o eixo x
+)
+
+# Adicionar linha de distribuição
+fig_age.update_traces(marker=dict(opacity=0.7), showlegend=False)
+
+# Atualizar layout do gráfico
+fig_age.update_layout(
+    xaxis_title='Idade',
+    yaxis_title='Número de Usuários',
+    showlegend=False,
+)
+
+
 
 # Layout da página 'home'
 layout = html.Div(
@@ -125,7 +166,7 @@ layout = html.Div(
                                         dbc.Row(
                                             [
                                                 dbc.Col(dbc.Card([dcc.Graph(figure=fig, id='gender_chart')], body=True), style={"flex-grow": 8}),
-                                                dbc.Col(dbc.Card(body=True), style={"flex-grow": 8}),
+                                               dbc.Col(dbc.Card([dcc.Graph(figure=fig_age, id='age_chart')], body=True), style={"flex-grow": 8}),
                                             ]
                                         ),
                                     ],
